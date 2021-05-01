@@ -5,7 +5,7 @@
 Convert 
 2x + 3y + 10z - 20 + x = 10 
 into 
-3x + 3y + 10z = 30 (ax + By + Cz = D) form
+3x + 3y + 10z = 30 (Ax + By + Cz = D) form
 ```
 Equation Standardizer is made with sole purpose of making any user input equation of one degree, into standard form.
 
