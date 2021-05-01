@@ -12,8 +12,12 @@ export const makeItStandard = (rawEquation: string) => {
   let step2Latex = buildLatexVarFromLeftAndConstFromRight(step2);
   let step3: ThreeVariableEquation = _likeVariableAndConstantAdder(step2);
   let step3Latex = buildLatexVarFromLeftAndConstFromRight(step3);
-  return [step1Latex, step2Latex, step3Latex];
-};
+  return {
+      latexArray :[step1Latex,step2Latex,step3Latex],
+      leftVars : step3.leftSideCoeffVarAndConstantTree.CoeffAndVar,
+      rightConstant: step3.rightSideCoeffVarAndConstantTree.Constants
+  };
+}
 
 type CoeffVarAndConstantTree = {
   CoeffAndVar: string[];
@@ -77,7 +81,7 @@ const buildLatexVarFromLeftAndConstFromRight = (
 
 
 
-
+// Second Step : Separates the variables to the left and constants to the right
 const _equationVarAndConstSeparator = (
   equation: ThreeVariableEquation
 ): ThreeVariableEquation => {
@@ -122,8 +126,19 @@ const _equationVarAndConstSeparator = (
   );
   equation.rightSideCoeffVarAndConstantTree.CoeffAndVar = [];
   equation.leftSideCoeffVarAndConstantTree.Constants = [];
+
+
+  // Replace the sign of first constant to nothing if its "+"
+  if(equation.rightSideCoeffVarAndConstantTree.Constants.length > 1){
+        equation.rightSideCoeffVarAndConstantTree.Constants[0] = equation.rightSideCoeffVarAndConstantTree.Constants[0].replace(/[+]/, "");
+  }
+  equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0] = equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0].replace(/[+]/, "");
   return equation;
 };
+
+
+
+
 
 // Adds all the like variables in the left side and adds all the constants in the right side
 const _likeVariableAndConstantAdder = (
@@ -194,5 +209,12 @@ const _likeVariableAndConstantAdder = (
   equation.leftSideCoeffVarAndConstantTree.CoeffAndVar = addLikeVariables(
     equation.leftSideCoeffVarAndConstantTree.CoeffAndVar
   );
+
+  // Replace the sign of first constant to nothing if its "+"
+  if(equation.rightSideCoeffVarAndConstantTree.Constants.length > 1){
+        equation.rightSideCoeffVarAndConstantTree.Constants[0] = equation.rightSideCoeffVarAndConstantTree.Constants[0].replace(/[+]/, "");
+  }
+  equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0] = equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0].replace(/[+]/, "");
   return equation;
 };
+
