@@ -155,23 +155,25 @@ const _equationVarAndConstSeparator = (
 
 
 
+
+
 // Adds all the like variables in the left side and adds all the constants in the right side
 const _likeVariableAndConstantAdder = (
   equation: ThreeVariableEquation
 ): ThreeVariableEquation => {
-
-  // ADDING THE CONSTANTS
+    
+  // Adding the constants
   // Only operate over the constants array in the right side if its lenght is greater than 1
   if (equation.rightSideCoeffVarAndConstantTree.Constants.length !== 1) {
     // Min constant value present in the right side
     let equationValue = 0;
-    //Iterate over all the values of constants in the right side and operate it with each other
+    // Iterate over all the values of constants in the right side and operate it with each other
     equation.rightSideCoeffVarAndConstantTree.Constants.map(
       (constantValue: string) => {
         equationValue = equationValue + parseInt(constantValue);
       }
     );
-    //Finally after operating it with each other set the constant in the right side that final value
+    // Finally after operating it with each other set the constant in the right side that final value
     equation.rightSideCoeffVarAndConstantTree.Constants = [`${equationValue}`];
   }
 
@@ -218,8 +220,8 @@ const _likeVariableAndConstantAdder = (
      
       returnArray.push(`${
       coeffAndvarGroupValues < 0 ?
-      coeffAndvarGroupValues: coeffAndVarGroup.vars[0] === coeffAndVarGroup.vars[i - 1]
-       ? coeffAndvarGroupValues: `+${coeffAndvarGroupValues}`}${coeffAndVarGroup.vars[i - 1]}`);
+      (coeffAndvarGroupValues === -1 ? "-" : coeffAndvarGroupValues) : coeffAndVarGroup.vars[0] === coeffAndVarGroup.vars[i - 1]
+       ? (coeffAndvarGroupValues === 1 ? "": coeffAndvarGroupValues): `+${coeffAndvarGroupValues === 1 ? "" : coeffAndvarGroupValues}`}${coeffAndVarGroup.vars[i - 1]}`);
 
       //CoeffAndVarGroupValues => Value of the coefficient
       //returnArray.push(`${coeffAndvarGroupValues}${coeffAndVarGroup.vars[i-1]}`);
