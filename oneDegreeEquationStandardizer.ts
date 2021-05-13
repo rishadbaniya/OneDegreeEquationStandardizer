@@ -4,8 +4,12 @@
 // Step 1 => Its the latex building of just showing the user question
 // Step 2 => Its the latex building of separating the like variables and the constants in left and right respectively
 // Step 3 => Its the latex building of adding and subtracting the like variables and the constants
-
-export const makeItStandard = (rawEquation: string) => {
+export type makeItStandardType = {
+    latexArray : string[],
+    leftVars : string[],
+    rightConstant : string[]
+}
+export const makeItStandard = (rawEquation: string) : makeItStandardType => {
   let step1: ThreeVariableEquation = new ThreeVariableEquation(rawEquation);
   let step1Latex = step1.buidlatexFromRawInput();
   let step2: ThreeVariableEquation = _equationVarAndConstSeparator(step1);
@@ -51,6 +55,8 @@ class ThreeVariableEquation {
 
 
 
+
+
 // Latex building for the third and fourth step, where
 // left side has no constants and right side has no variables
 const buildLatexVarFromLeftAndConstFromRight = (
@@ -67,6 +73,8 @@ const buildLatexVarFromLeftAndConstFromRight = (
   // Add equals sign after the latex of the left expression of equation
   returnLatex += "=";
 
+
+
   // Iterate over all the constants in the right side making latex of of it
   // If the constants array is empty then it must be that constant is 0
   if (!(threeVarEq.rightSideCoeffVarAndConstantTree.Constants.length === 0)) {
@@ -78,6 +86,12 @@ const buildLatexVarFromLeftAndConstFromRight = (
   }
   return returnLatex;
 };
+
+
+
+
+
+
 
 
 
@@ -140,24 +154,30 @@ const _equationVarAndConstSeparator = (
 
 
 
+
 // Adds all the like variables in the left side and adds all the constants in the right side
 const _likeVariableAndConstantAdder = (
   equation: ThreeVariableEquation
 ): ThreeVariableEquation => {
+
   // ADDING THE CONSTANTS
   // Only operate over the constants array in the right side if its lenght is greater than 1
   if (equation.rightSideCoeffVarAndConstantTree.Constants.length !== 1) {
     // Min constant value present in the right side
     let equationValue = 0;
+    //Iterate over all the values of constants in the right side and operate it with each other
     equation.rightSideCoeffVarAndConstantTree.Constants.map(
       (constantValue: string) => {
         equationValue = equationValue + parseInt(constantValue);
       }
     );
+    //Finally after operating it with each other set the constant in the right side that final value
     equation.rightSideCoeffVarAndConstantTree.Constants = [`${equationValue}`];
   }
+
   // ADDING THE LIKE VARIABLES IN THE LEFT SIDE
   const addLikeVariables = (varArray: string[]): string[] => {
+    //Array to be returned
     let returnArray: string[] = [];
     let coeffAndVarGroup: {
       vars: string[];
@@ -166,6 +186,7 @@ const _likeVariableAndConstantAdder = (
       vars: [],
       values: [],
     };
+
     varArray.map((data1) => {
       let data1Var = (data1.match(/[A-Za-z]/) ?? [""])[0];
       if (!coeffAndVarGroup.vars.includes(data1Var)) {
@@ -194,15 +215,14 @@ const _likeVariableAndConstantAdder = (
       coeffAndVarGroup.values[i - 1].map((value: string) => {
         coeffAndvarGroupValues = coeffAndvarGroupValues + parseInt(value);
       });
-      returnArray.push(
-        `${
-          coeffAndvarGroupValues < 0
-            ? coeffAndvarGroupValues
-            : coeffAndVarGroup.vars[0] === coeffAndVarGroup.vars[i - 1]
-            ? coeffAndvarGroupValues
-            : `+${coeffAndvarGroupValues}`
-        }${coeffAndVarGroup.vars[i - 1]}`
-      );
+     
+      returnArray.push(`${
+      coeffAndvarGroupValues < 0 ?
+      coeffAndvarGroupValues: coeffAndVarGroup.vars[0] === coeffAndVarGroup.vars[i - 1]
+       ? coeffAndvarGroupValues: `+${coeffAndvarGroupValues}`}${coeffAndVarGroup.vars[i - 1]}`);
+
+      //CoeffAndVarGroupValues => Value of the coefficient
+      //returnArray.push(`${coeffAndvarGroupValues}${coeffAndVarGroup.vars[i-1]}`);
     }
     return returnArray;
   };
@@ -210,10 +230,12 @@ const _likeVariableAndConstantAdder = (
     equation.leftSideCoeffVarAndConstantTree.CoeffAndVar
   );
 
-  // Replace the sign of first constant to nothing if its "+"
+  // Replace the sign of first constant in the right side to nothing if its "+"
   if(equation.rightSideCoeffVarAndConstantTree.Constants.length > 1){
         equation.rightSideCoeffVarAndConstantTree.Constants[0] = equation.rightSideCoeffVarAndConstantTree.Constants[0].replace(/[+]/, "");
   }
+
+  // Replace the sign of first coeffandvar in the left side to nothing if its "+"
   equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0] = equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0].replace(/[+]/, "");
   return equation;
 };
