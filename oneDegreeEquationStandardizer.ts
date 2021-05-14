@@ -4,7 +4,7 @@
 // Step 1 => Its the latex building of just showing the user question
 // Step 2 => Its the latex building of separating the like variables and the constants in left and right respectively
 // Step 3 => Its the latex building of adding and subtracting the like variables and the constants
-export type makeItStandardType = {
+type makeItStandardType = {
     latexArray : string[],
     leftVars : string[],
     rightConstant : string[]
@@ -49,7 +49,7 @@ class ThreeVariableEquation {
     };
   }
   buidlatexFromRawInput(): string {
-    return this.rawInputEquation.replace(/([A-Za-z])/g, "\text{$1}");
+    return this.rawInputEquation.replace(/([A-Za-z])/g, "\\text{$1}");
   }
 }
 
@@ -67,7 +67,7 @@ const buildLatexVarFromLeftAndConstFromRight = (
 
   // Iterate over all the coeff in the left side and making latex out of it
   threeVarEq.leftSideCoeffVarAndConstantTree.CoeffAndVar.map((data) => {
-    returnLatex += data.replace(/([A-Za-z])/, "\text{$1}");
+    returnLatex += data.replace(/([A-Za-z])/, String.raw`\text{$1}`);
   });
 
   // Add equals sign after the latex of the left expression of equation
