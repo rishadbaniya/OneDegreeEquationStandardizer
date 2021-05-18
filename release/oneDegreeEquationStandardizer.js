@@ -1,3 +1,9 @@
+// It takes equation with about 3 variables and resolves it properly
+// Eg 2x + 10x + 3 + 2 + 10y = 20z + 2 into 12x + 10y - 20z = -3
+// It will return latex of 3 steps
+// Step 1 => Its the latex building of just showing the user question
+// Step 2 => Its the latex building of separating the like variables and the constants in left and right respectively
+// Step 3 => Its the latex building of adding and subtracting the like variables and the constants
 export const makeItStandard = (rawEquation) => {
     let step1 = new ThreeVariableEquation(rawEquation);
     let step1Latex = step1.buidlatexFromRawInput();
@@ -11,10 +17,25 @@ export const makeItStandard = (rawEquation) => {
         rightConstant: step3.rightSideCoeffVarAndConstantTree.Constants
     };
 };
+const isRawEquationValid = (rawEq) => {
+    const INVALID_EQUATION = "INVALID_EQUATION";
+    let toNotInclude = ["++", "--", "==", "+=", "-=", "*", "/"];
+    if (!rawEq.includes("=")) {
+        throw INVALID_EQUATION;
+    }
+    else {
+        toNotInclude.map((d) => {
+            if (rawEq.includes(d)) {
+                throw INVALID_EQUATION;
+            }
+        });
+    }
+};
 class ThreeVariableEquation {
     constructor(equation) {
         var _a, _b, _c, _d, _e, _f;
         this.rawInputEquation = equation;
+        isRawEquationValid(this.rawInputEquation);
         let rawExpression = equation.replace(/\s*/g, "");
         let leftSideRawExpression = ((_a = rawExpression.match(/.*(?=\=)/)) !== null && _a !== void 0 ? _a : [""])[0];
         let rightSideRawExpression = ((_b = rawExpression.match(/(?<=\=).*/)) !== null && _b !== void 0 ? _b : [""])[0];

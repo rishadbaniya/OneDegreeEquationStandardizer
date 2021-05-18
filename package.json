@@ -1,0 +1,23 @@
+{
+  "name": "onedegreeequationstandardizer",
+  "version": "1.0.0",
+  "description": "🤐 Beware - Its all about math ``` Convert  2x + 3y + 10z - 20 + x = 10  into  3x + 3y + 10z = 30 (Ax + By + Cz = D) form ``` Equation Standardizer is made with sole purpose of making any user input equation of one degree, into standard form.",
+  "main": "OneDegreeEquationStandardizer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishadbaniya/OneDegreeEquationStandardizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rishadbaniya/OneDegreeEquationStandardizer/issues"
+  },
+  "homepage": "https://github.com/rishadbaniya/OneDegreeEquationStandardizer#readme",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}
