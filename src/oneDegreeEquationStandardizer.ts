@@ -10,7 +10,7 @@ type makeItStandardType = {
     leftVars : string[],
     rightConstant : string[]
 }
-export const makeItStandard = (rawEquation: string) : makeItStandardType => {
+const makeItStandard = (rawEquation: string) : makeItStandardType => {
   let step1: ThreeVariableEquation = new ThreeVariableEquation(rawEquation);
   let step1Latex = step1.buidlatexFromRawInput();
   let step2: ThreeVariableEquation = _equationVarAndConstSeparator(step1);
@@ -32,7 +32,7 @@ type CoeffVarAndConstantTree = {
 
 const isRawEquationValid = (rawEq : string)=>{
 const INVALID_EQUATION = "INVALID_EQUATION";
-    let toNotInclude = ["++","--","==","+=","-=","*","/"];
+    let toNotInclude = ["++","--","==","+=","-=","-+","+-","*","/"];
     if(!rawEq.includes("=")){
         throw INVALID_EQUATION
     }else{
@@ -259,3 +259,4 @@ const _likeVariableAndConstantAdder = (
   return equation;
 };
 
+export default makeItStandard;

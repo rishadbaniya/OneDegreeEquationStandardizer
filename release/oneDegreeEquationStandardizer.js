@@ -4,7 +4,7 @@
 // Step 1 => Its the latex building of just showing the user question
 // Step 2 => Its the latex building of separating the like variables and the constants in left and right respectively
 // Step 3 => Its the latex building of adding and subtracting the like variables and the constants
-export const makeItStandard = (rawEquation) => {
+const makeItStandard = (rawEquation) => {
     let step1 = new ThreeVariableEquation(rawEquation);
     let step1Latex = step1.buidlatexFromRawInput();
     let step2 = _equationVarAndConstSeparator(step1);
@@ -19,7 +19,7 @@ export const makeItStandard = (rawEquation) => {
 };
 const isRawEquationValid = (rawEq) => {
     const INVALID_EQUATION = "INVALID_EQUATION";
-    let toNotInclude = ["++", "--", "==", "+=", "-=", "*", "/"];
+    let toNotInclude = ["++", "--", "==", "+=", "-=", "-+", "+-", "*", "/"];
     if (!rawEq.includes("=")) {
         throw INVALID_EQUATION;
     }
@@ -191,3 +191,4 @@ const _likeVariableAndConstantAdder = (equation) => {
     equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0] = equation.leftSideCoeffVarAndConstantTree.CoeffAndVar[0].replace(/[+]/, "");
     return equation;
 };
+export default makeItStandard;
