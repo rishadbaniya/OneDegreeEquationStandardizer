@@ -4,6 +4,7 @@
 // Step 1 => Its the latex building of just showing the user question
 // Step 2 => Its the latex building of separating the like variables and the constants in left and right respectively
 // Step 3 => Its the latex building of adding and subtracting the like variables and the constants
+
 type makeItStandardType = {
     latexArray : string[],
     leftVars : string[],
@@ -28,12 +29,28 @@ type CoeffVarAndConstantTree = {
   Constants: string[];
 };
 
+
+const isRawEquationValid = (rawEq : string)=>{
+const INVALID_EQUATION = "INVALID_EQUATION";
+    let toNotInclude = ["++","--","==","+=","-=","*","/"];
+    if(!rawEq.includes("=")){
+        throw INVALID_EQUATION
+    }else{
+    toNotInclude.map((d)=>{
+        if (rawEq.includes(d)){
+            throw INVALID_EQUATION;
+             }
+         });
+    }
+}
+
 class ThreeVariableEquation {
   rawInputEquation: string;
   leftSideCoeffVarAndConstantTree: CoeffVarAndConstantTree;
   rightSideCoeffVarAndConstantTree: CoeffVarAndConstantTree;
   constructor(equation: string) {
     this.rawInputEquation = equation;
+    isRawEquationValid(this.rawInputEquation);
     let rawExpression = equation.replace(/\s*/g, "");
     let leftSideRawExpression = (rawExpression.match(/.*(?=\=)/) ?? [""])[0];
     let rightSideRawExpression = (rawExpression.match(/(?<=\=).*/) ?? [""])[0];
