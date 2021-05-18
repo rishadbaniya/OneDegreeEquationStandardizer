@@ -4,7 +4,8 @@
   "description": "🤐 Beware - Its all about math ``` Convert  2x + 3y + 10z - 20 + x = 10  into  3x + 3y + 10z = 30 (Ax + By + Cz = D) form ``` Equation Standardizer is made with sole purpose of making any user input equation of one degree, into standard form.",
   "main": "OneDegreeEquationStandardizer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "minify" : "uglifyjs --compress --mangle --output ./release/oneDegreeEquationStandardizer.min.js -- ./release/oneDegreeEquationStandardizer.js",
+    "build": "tsc && npm run minify"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/rishadbaniya/OneDegreeEquationStandardizer#readme",
   "devDependencies": {
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "uglify-js": "^3.13.6"
   }
 }
